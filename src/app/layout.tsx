@@ -13,6 +13,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "HomeCircle",
   description: "Know your family's money. Plan your month. Save together.",
+  manifest: "/manifest.json",
 };
 
 export default async function RootLayout({
