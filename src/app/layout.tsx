@@ -72,7 +72,7 @@ export default async function RootLayout({
           <GlobalFab />
 
           {/* Bottom Navigation (Mobile) / Side Navigation (Desktop) */}
-          <nav className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 md:relative md:w-64 md:border-t-0 md:border-r md:flex md:flex-col md:p-4 z-40 md:order-first shadow-sm pb-[env(safe-area-inset-bottom)]">
+          <nav className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 md:relative md:w-64 md:border-t-0 md:border-r md:flex md:flex-col md:p-4 z-40 md:order-first shadow-sm">
             <div className="md:hidden flex justify-between items-center h-16 px-4">
               <Link href="/" className="flex flex-col items-center text-[10px] font-semibold text-gray-500 hover:text-blue-600 w-12">
                 <span className="text-xl mb-1">🏠</span> Home
