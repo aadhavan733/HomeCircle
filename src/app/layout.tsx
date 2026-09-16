@@ -46,10 +46,10 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-gray-50 text-gray-900 antialiased pb-20 md:pb-0 md:flex md:h-screen md:overflow-hidden`}>
+      <body className={`${inter.className} bg-gray-50 text-gray-900 antialiased md:flex md:h-screen md:overflow-hidden`}>
         <SyncProvider>
           {/* Main Content Area */}
-          <main className="flex-1 w-full max-w-5xl mx-auto md:h-screen md:overflow-y-auto">
+          <main className="flex-1 w-full max-w-5xl mx-auto pb-24 md:pb-0 md:h-screen md:overflow-y-auto">
             {/* Mobile top bar with family switcher */}
             {familySwitcherProps && (
               <div className="md:hidden flex items-center justify-between px-4 py-3 bg-white border-b border-gray-100 sticky top-0 z-30 shadow-sm">
@@ -72,7 +72,7 @@ export default async function RootLayout({
           <GlobalFab />
 
           {/* Bottom Navigation (Mobile) / Side Navigation (Desktop) */}
-          <nav className="fixed bottom-0 w-full bg-white border-t border-gray-200 md:relative md:w-64 md:border-t-0 md:border-r md:flex md:flex-col p-2 md:p-4 z-40 md:order-first shadow-sm">
+          <nav className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 md:relative md:w-64 md:border-t-0 md:border-r md:flex md:flex-col md:p-4 z-40 md:order-first shadow-sm pb-[env(safe-area-inset-bottom)]">
             <div className="md:hidden flex justify-between items-center h-16 px-4">
               <Link href="/" className="flex flex-col items-center text-[10px] font-semibold text-gray-500 hover:text-blue-600 w-12">
                 <span className="text-xl mb-1">🏠</span> Home
