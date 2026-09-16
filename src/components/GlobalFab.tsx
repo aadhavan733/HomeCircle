@@ -11,7 +11,7 @@ export default function GlobalFab() {
   // Define where the FAB should be visible
   // It shouldn't show on form pages like /transactions/add, /family, /login, etc.
   // Define where the FAB should be visible
-  const allowedPaths = ['/', '/transactions', '/bills', '/goals', '/budgets', '/family']
+  const allowedPaths = ['/', '/transactions', '/bills', '/goals', '/budgets', '/family', '/analytics']
   const isAllowed = allowedPaths.includes(pathname)
 
   if (!isAllowed) return null

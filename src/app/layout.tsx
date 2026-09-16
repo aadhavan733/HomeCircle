@@ -46,10 +46,10 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-gray-50 text-gray-900 antialiased pb-20 md:pb-0 md:flex md:h-screen overflow-hidden`}>
+      <body className={`${inter.className} bg-gray-50 text-gray-900 antialiased pb-20 md:pb-0 md:flex md:h-screen md:overflow-hidden`}>
         <SyncProvider>
           {/* Main Content Area */}
-          <main className="flex-1 overflow-y-auto w-full max-w-5xl mx-auto h-[calc(100vh-5rem)] md:h-screen">
+          <main className="flex-1 w-full max-w-5xl mx-auto md:h-screen md:overflow-y-auto">
             {/* Mobile top bar with family switcher */}
             {familySwitcherProps && (
               <div className="md:hidden flex items-center justify-between px-4 py-3 bg-white border-b border-gray-100 sticky top-0 z-30 shadow-sm">

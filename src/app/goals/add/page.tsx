@@ -2,19 +2,15 @@ import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { addGoal } from '../actions'
+import { getActiveFamilyId } from '@/lib/activeFamily'
 
 export default async function AddGoalPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
-  const { data: familyMember } = await supabase
-    .from('family_members')
-    .select('family_id')
-    .eq('user_id', user.id)
-    .single()
-
-  if (!familyMember) redirect('/family')
+  const { familyId } = await getActiveFamilyId(user.id)
+  if (!familyId) redirect('/family')
 
   return (
     <div className="p-4 md:p-8 max-w-lg mx-auto bg-white min-h-[calc(100vh-4rem)] md:min-h-0 md:rounded-xl md:shadow-sm md:border md:border-gray-100 md:my-8 z-50 absolute md:relative inset-0 md:inset-auto">
@@ -24,7 +20,7 @@ export default async function AddGoalPage() {
       </div>
 
       <form action={addGoal} className="space-y-5">
-        <input type="hidden" name="family_id" value={familyMember.family_id} />
+        <input type="hidden" name="family_id" value={familyId} />
         
         {/* Name */}
         <div>

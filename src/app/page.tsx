@@ -107,8 +107,8 @@ export default async function Dashboard({
 
 
   return (
-    <div className="px-4 pb-4 pt-1 md:p-8">
-      <header className="mb-6 flex justify-between items-center">
+    <div className="px-4 pb-4 pt-0 md:p-8">
+      <header className="mb-3 flex justify-between items-center">
         <div className="flex items-center gap-3">
           <Link href={`/?month=${prevMonthStr}`} className="text-gray-400 hover:text-gray-700">◀</Link>
           <h1 className="text-2xl font-bold min-w-[120px] text-center">{formattedMonthName}</h1>
