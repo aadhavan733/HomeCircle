@@ -66,14 +66,14 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang="en">
+    <html lang="en" className="bg-white">
       <body className={`${inter.className} bg-white text-gray-900 antialiased md:flex md:h-screen md:overflow-hidden`}>
         <SyncProvider>
           {/* Main Content Area */}
           <main className="flex-1 w-full max-w-5xl mx-auto pb-24 md:pb-0 min-h-screen md:h-screen md:overflow-y-auto bg-gray-50">
             {/* Mobile top bar with family switcher */}
             {familySwitcherProps && (
-              <div className="md:hidden flex items-center justify-between px-4 py-3 bg-white border-b border-gray-100 sticky top-0 z-30 shadow-sm">
+              <div className="md:hidden flex items-center justify-between px-4 py-3 pt-[calc(env(safe-area-inset-top)+0.75rem)] bg-white border-b border-gray-100 sticky top-0 z-30 shadow-sm">
                 <div className="flex items-center gap-1">
                   <img src="/logo_icon.png" alt="Logo" className="h-9 w-auto object-contain" />
                   <span className="text-xl font-bold text-blue-600 tracking-tight leading-none mt-1">HomeCircle</span>
