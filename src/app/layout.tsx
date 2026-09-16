@@ -66,6 +66,16 @@ export default async function RootLayout({
     // Not logged in or error — switcher simply won't render
   }
 
+  // Grab profile initial for header
+  let profileInitial = 'U'
+  try {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (user) {
+      profileInitial = (user.user_metadata?.full_name || user.email?.split('@')[0] || 'U').charAt(0)
+    }
+  } catch {}
+
   return (
     <html lang="en" className="bg-white">
       <body className={`${inter.className} bg-white text-gray-900 antialiased md:flex md:h-screen md:overflow-hidden`}>
@@ -81,6 +91,9 @@ export default async function RootLayout({
                 </div>
                 <div className="flex items-center gap-3">
                   <InstallPrompt />
+                  <Link href="/family" className="w-8 h-8 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center font-bold text-sm cursor-pointer" title="Profile">
+                    {profileInitial}
+                  </Link>
                   <FamilySwitcher {...familySwitcherProps} />
                   <Link href="/family" className="text-gray-500 hover:text-blue-600 text-xl" aria-label="Family Settings">
                     ⚙️

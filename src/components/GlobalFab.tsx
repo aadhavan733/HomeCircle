@@ -26,7 +26,7 @@ export default function GlobalFab() {
         />
       )}
 
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 md:bottom-8 md:left-auto md:right-8 md:translate-x-0 z-50 flex flex-col items-center md:items-end">
+      <div className="fixed mobile-fab-position left-1/2 -translate-x-1/2 md:bottom-8 md:left-auto md:right-8 md:translate-x-0 z-50 flex flex-col items-center md:items-end">
         {open && (
           <div className="flex flex-col gap-3 mb-4 items-center md:items-end animate-in slide-in-from-bottom-5 fade-in duration-200 z-10">
           <Link

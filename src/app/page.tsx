@@ -108,19 +108,18 @@ export default async function Dashboard({
 
   return (
     <div className="px-4 pb-4 pt-0 md:p-8">
-      <header className="mb-3 flex justify-between items-center">
+      <header className="mb-3 flex justify-center items-center">
         <div className="flex items-center gap-3">
           <Link href={`/?month=${prevMonthStr}`} className="text-gray-400 hover:text-gray-700">◀</Link>
-          <h1 className="text-2xl font-bold min-w-[120px] text-center">{formattedMonthName}</h1>
+          <h1 className="text-3xl font-bold min-w-[140px] text-center">{formattedMonthName}</h1>
           <Link href={`/?month=${nextMonthStr}`} className="text-gray-400 hover:text-gray-700">▶</Link>
         </div>
-        <Link href="/family" className="w-10 h-10 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center font-bold text-lg cursor-pointer" title={profileName}>
-          {profileName.charAt(0) || 'U'}
-        </Link>
       </header>
 
       <section className="bg-white rounded-xl shadow-sm border border-gray-100 p-5 mb-6 relative">
-        <Link href={`/budgets?month=${currentMonthStr}`} className="absolute top-4 right-4 text-gray-400 hover:text-gray-700" title="Set Budget">⚙️</Link>
+        <Link href={`/budgets?month=${currentMonthStr}`} className="absolute top-2 right-2 p-3 text-gray-400 hover:text-gray-700 flex items-center justify-center min-w-[44px] min-h-[44px]" title="Set Budget">
+          <span className="text-lg">✏️</span>
+        </Link>
         
         {totalBudgetPaise > 0 ? (
           <>
@@ -154,7 +153,7 @@ export default async function Dashboard({
 
       <section className="mb-6">
         <div className="flex justify-between items-end mb-3">
-          <h3 className="font-semibold text-gray-800">Top Category Spending</h3>
+          <h2 className="font-semibold text-gray-800">Top Category Spending</h2>
           <Link href={`/analytics?month=${currentMonthStr}`} className="text-xs text-blue-600 hover:underline">View Analytics 📈</Link>
         </div>
         {topCategories.length > 0 ? (
@@ -178,7 +177,7 @@ export default async function Dashboard({
       {/* Upcoming Bills — due within 10 days */}
       <section className="mb-6">
         <div className="flex justify-between items-end mb-3">
-          <h3 className="font-semibold text-gray-800">Upcoming Bills</h3>
+          <h2 className="font-semibold text-gray-800">Upcoming Bills</h2>
           <Link href="/bills" className="text-xs text-blue-600 hover:underline">View all</Link>
         </div>
 
