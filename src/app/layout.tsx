@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
@@ -7,13 +7,32 @@ import FamilySwitcher from "@/components/FamilySwitcher";
 import GlobalFab from "@/components/GlobalFab";
 import { createClient } from "@/utils/supabase/server";
 import { getActiveFamilyId } from "@/lib/activeFamily";
+import InstallPrompt from "@/components/InstallPrompt";
 
 const inter = Inter({ subsets: ["latin"] });
 
+export const viewport: Viewport = {
+  themeColor: "#0F766E",
+};
+
 export const metadata: Metadata = {
   title: "HomeCircle",
-  description: "Know your family's money. Plan your month. Save together.",
+  description: "A simple private and shared family budget app.",
   manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "HomeCircle",
+  },
+  icons: {
+    icon: [
+      { url: '/favicon-32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-16.png', sizes: '16x16', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/icons/homecircle-apple-touch-icon.png', sizes: '180x180' }
+    ]
+  }
 };
 
 export default async function RootLayout({
@@ -59,6 +78,7 @@ export default async function RootLayout({
                   <span className="text-xl font-bold text-blue-600 tracking-tight leading-none mt-1">HomeCircle</span>
                 </div>
                 <div className="flex items-center gap-3">
+                  <InstallPrompt />
                   <FamilySwitcher {...familySwitcherProps} />
                   <Link href="/family" className="text-gray-500 hover:text-blue-600 text-xl" aria-label="Family Settings">
                     ⚙️
@@ -99,6 +119,9 @@ export default async function RootLayout({
                   <img src="/logo_icon.png" alt="Logo" className="h-12 w-auto object-contain" />
                   <span className="text-2xl font-bold text-blue-600 tracking-tight leading-none mt-1">HomeCircle</span>
                 </div>
+                <div className="mb-4">
+                  <InstallPrompt />
+                </div>
                 {familySwitcherProps && (
                   <FamilySwitcher {...familySwitcherProps} />
                 )}
@@ -121,6 +144,24 @@ export default async function RootLayout({
             </div>
           </nav>
         </SyncProvider>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                  navigator.serviceWorker.register('/sw.js').then(
+                    function(registration) {
+                      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    },
+                    function(err) {
+                      console.log('ServiceWorker registration failed: ', err);
+                    }
+                  );
+                });
+              }
+            `,
+          }}
+        />
       </body>
     </html>
   );
