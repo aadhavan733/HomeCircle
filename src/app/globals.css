@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f9fafb;
+  --foreground: #111827;
 }
 
 @theme inline {
@@ -10,17 +10,23 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Brand Colors from Logo (Mapping to blue to instantly theme the app) */
+  --color-blue-50: #effbf8;
+  --color-blue-100: #d7f5ed;
+  --color-blue-200: #b1ebd8;
+  --color-blue-300: #7fdcbd;
+  --color-blue-400: #49c49f;
+  --color-blue-500: #25a785;
+  --color-blue-600: #13a086;
+  --color-blue-700: #107e69;
+  --color-blue-800: #0f6454;
+  --color-blue-900: #0d5246;
+  --color-blue-950: #062f29;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background-color: #f9fafb;
+  color: #111827;
   font-family: Arial, Helvetica, sans-serif;
 }
