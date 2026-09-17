@@ -2,6 +2,7 @@
 
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
+import { cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
 
 export async function login(formData: FormData) {
@@ -53,4 +54,20 @@ export async function signup(formData: FormData) {
 
   revalidatePath('/', 'layout')
   redirect('/')
+}
+
+export async function signout() {
+  const cookieStore = await cookies()
+  const supabase = await createClient()
+  await supabase.auth.signOut()
+
+  const allCookies = cookieStore.getAll()
+  for (const cookie of allCookies) {
+    if (cookie.name.startsWith('sb-') || cookie.name.includes('auth-token') || cookie.name.includes('supabase')) {
+      cookieStore.delete(cookie.name)
+    }
+  }
+
+  revalidatePath('/', 'layout')
+  return { success: true }
 }

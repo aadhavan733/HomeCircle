@@ -3,6 +3,8 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { addContribution } from './actions'
 import { getActiveFamilyId } from '@/lib/activeFamily'
+ 
+export const dynamic = 'force-dynamic'
 
 export default async function GoalsPage() {
   const supabase = await createClient()

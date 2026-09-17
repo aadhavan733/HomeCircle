@@ -24,8 +24,9 @@ export default async function AddGoalPage() {
         
         {/* Name */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Goal Name</label>
+          <label htmlFor="goal-name" className="block text-sm font-medium text-gray-700 mb-1">Goal Name</label>
           <input 
+            id="goal-name"
             name="name"
             type="text" 
             required
@@ -36,8 +37,9 @@ export default async function AddGoalPage() {
 
         {/* Amount */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Target Amount (₹)</label>
+          <label htmlFor="goal-target-amount" className="block text-sm font-medium text-gray-700 mb-1">Target Amount (₹)</label>
           <input 
+            id="goal-target-amount"
             name="target_amount"
             type="number" 
             step="0.01" 
@@ -50,8 +52,9 @@ export default async function AddGoalPage() {
 
         {/* Target Date */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Target Date (Optional)</label>
+          <label htmlFor="goal-target-date" className="block text-sm font-medium text-gray-700 mb-1">Target Date (Optional)</label>
           <input 
+            id="goal-target-date"
             name="target_date"
             type="date"
             className="w-full p-3 border border-gray-300 rounded-lg text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -60,8 +63,8 @@ export default async function AddGoalPage() {
 
         {/* Visibility */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Visibility</label>
-          <select name="visibility" className="w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <label htmlFor="goal-visibility" className="block text-sm font-medium text-gray-700 mb-1">Visibility</label>
+          <select id="goal-visibility" name="visibility" className="w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
             <option value="shared">Shared with Family</option>
             <option value="personal">Personal (Private)</option>
           </select>

@@ -9,6 +9,7 @@ import { createClient } from "@/utils/supabase/server";
 import { getActiveFamilyId } from "@/lib/activeFamily";
 import InstallPrompt from "@/components/InstallPrompt";
 import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
+import SignOutButton from "@/components/SignOutButton";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -156,6 +157,9 @@ export default async function RootLayout({
               <Link href="/family" className="p-3 mb-2 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-700 flex items-center font-medium transition-colors">
                 <span className="mr-3 text-xl">👨‍👩‍👧‍👦</span> Family
               </Link>
+              <div className="mt-auto pt-4 border-t border-gray-100">
+                <SignOutButton variant="sidebar" />
+              </div>
             </div>
           </nav>
         </SyncProvider>

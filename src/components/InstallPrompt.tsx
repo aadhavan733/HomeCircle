@@ -1,21 +1,39 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useSyncExternalStore } from 'react'
+
+function subscribeStandalone(callback: () => void) {
+  const mql = window.matchMedia('(display-mode: standalone)')
+  mql.addEventListener('change', callback)
+  return () => mql.removeEventListener('change', callback)
+}
+
+function getStandaloneSnapshot() {
+  return window.matchMedia('(display-mode: standalone)').matches
+}
+
+function getStandaloneServerSnapshot() {
+  return false
+}
+
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed'; platform: string }>
+}
 
 export default function InstallPrompt() {
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null)
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null)
   const [isInstallable, setIsInstallable] = useState(false)
-  const [isStandalone, setIsStandalone] = useState(false)
+  const isStandalone = useSyncExternalStore(
+    subscribeStandalone,
+    getStandaloneSnapshot,
+    getStandaloneServerSnapshot
+  )
 
   useEffect(() => {
-    // Check if already installed
-    if (window.matchMedia('(display-mode: standalone)').matches) {
-      setIsStandalone(true)
-    }
-
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault()
-      setDeferredPrompt(e)
+      setDeferredPrompt(e as BeforeInstallPromptEvent)
       setIsInstallable(true)
     }
 

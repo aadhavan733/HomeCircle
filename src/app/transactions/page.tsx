@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { deleteTransaction } from './actions'
 import { getActiveFamilyId } from '@/lib/activeFamily'
+ 
+export const dynamic = 'force-dynamic'
 
 export default async function TransactionsPage({
   searchParams,

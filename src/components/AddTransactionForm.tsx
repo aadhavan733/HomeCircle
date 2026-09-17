@@ -94,8 +94,9 @@ export default function AddTransactionForm({
 
       {/* Amount */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Amount (₹)</label>
+        <label htmlFor="tx-amount" className="block text-sm font-medium text-gray-700 mb-1">Amount (₹)</label>
         <input 
+          id="tx-amount"
           name="amount"
           type="number" 
           step="0.01" 
@@ -108,8 +109,9 @@ export default function AddTransactionForm({
 
       {/* Category */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+        <label htmlFor="tx-category" className="block text-sm font-medium text-gray-700 mb-1">Category</label>
         <select 
+          id="tx-category"
           name="category_id" 
           value={categoryId} 
           onChange={(e) => setCategoryId(e.target.value)}
@@ -133,8 +135,9 @@ export default function AddTransactionForm({
 
       {categoryId === 'other' && (
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">New Category Name</label>
+          <label htmlFor="tx-custom-category" className="block text-sm font-medium text-gray-700 mb-1">New Category Name</label>
           <input 
+            id="tx-custom-category"
             type="text" 
             value={customCategory}
             onChange={(e) => setCustomCategory(e.target.value)}
@@ -147,8 +150,9 @@ export default function AddTransactionForm({
 
       {/* Date */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Date</label>
+        <label htmlFor="tx-date" className="block text-sm font-medium text-gray-700 mb-1">Date</label>
         <input 
+          id="tx-date"
           name="date"
           type="date"
           required
@@ -159,8 +163,8 @@ export default function AddTransactionForm({
 
       {/* Visibility */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Visibility</label>
-        <select name="visibility" className="w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <label htmlFor="tx-visibility" className="block text-sm font-medium text-gray-700 mb-1">Visibility</label>
+        <select id="tx-visibility" name="visibility" className="w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
           <option value="shared">Shared with Family</option>
           <option value="personal">Personal (Private)</option>
         </select>
@@ -168,8 +172,9 @@ export default function AddTransactionForm({
 
       {/* Note */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Note (Optional)</label>
+        <label htmlFor="tx-note" className="block text-sm font-medium text-gray-700 mb-1">Note (Optional)</label>
         <textarea 
+          id="tx-note"
           name="note"
           rows={2}
           placeholder="What was this for?"

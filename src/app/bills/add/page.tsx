@@ -35,8 +35,9 @@ export default async function AddBillPage() {
         
         {/* Name */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Bill Name</label>
+          <label htmlFor="bill-name" className="block text-sm font-medium text-gray-700 mb-1">Bill Name</label>
           <input 
+            id="bill-name"
             name="name" 
             type="text" 
             required
@@ -47,8 +48,9 @@ export default async function AddBillPage() {
 
         {/* Amount */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Amount (₹)</label>
+          <label htmlFor="bill-amount" className="block text-sm font-medium text-gray-700 mb-1">Amount (₹)</label>
           <input 
+            id="bill-amount"
             name="amount"
             type="number" 
             step="0.01" 
@@ -61,8 +63,8 @@ export default async function AddBillPage() {
 
         {/* Frequency */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Frequency</label>
-          <select name="frequency" className="w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <label htmlFor="bill-frequency" className="block text-sm font-medium text-gray-700 mb-1">Frequency</label>
+          <select id="bill-frequency" name="frequency" className="w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
             <option value="one_time">One Time</option>
             <option value="monthly">Monthly</option>
             <option value="weekly">Weekly</option>
@@ -72,8 +74,9 @@ export default async function AddBillPage() {
 
         {/* Next Due Date */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Next Due Date</label>
+          <label htmlFor="bill-next-due-date" className="block text-sm font-medium text-gray-700 mb-1">Next Due Date</label>
           <input 
+            id="bill-next-due-date"
             name="next_due_date"
             type="date"
             required

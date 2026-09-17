@@ -3,6 +3,9 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { getActiveFamilyId } from '@/lib/activeFamily'
 
+export const dynamic = 'force-dynamic'
+import { calculateTransactionsSummary, calculateBudgetRemaining, calculateSpentPercentage, getTopCategories } from '@/lib/calculations'
+
 export default async function Dashboard({
   searchParams,
 }: {
@@ -57,31 +60,13 @@ export default async function Dashboard({
     .gte('date', startDate.toISOString().split('T')[0])
     .lte('date', endDate.toISOString().split('T')[0])
 
-  let totalIncomePaise = 0
-  let totalExpensePaise = 0
-  const categorySpending: Record<string, number> = {}
+  const { totalIncomePaise, totalExpensePaise, categorySpending } = calculateTransactionsSummary(transactions, user.id)
 
-  if (transactions) {
-    transactions.forEach(txn => {
-      // Filter out personal transactions not owned by user (though RLS already does this)
-      if (txn.visibility === 'personal' && txn.user_id !== user.id) return
-
-      if (txn.type === 'income') {
-        totalIncomePaise += txn.amount_paise
-      } else {
-        totalExpensePaise += txn.amount_paise
-        const catObj = Array.isArray(txn.categories) ? txn.categories[0] : txn.categories
-        const catName = catObj?.name || 'Uncategorized'
-        categorySpending[catName] = (categorySpending[catName] || 0) + txn.amount_paise
-      }
-    })
-  }
-
-  const budgetRemainingPaise = Math.max(0, totalBudgetPaise - totalExpensePaise)
-  const spentPercentage = totalBudgetPaise > 0 ? Math.min(100, (totalExpensePaise / totalBudgetPaise) * 100) : 0
+  const budgetRemainingPaise = calculateBudgetRemaining(totalBudgetPaise, totalExpensePaise)
+  const spentPercentage = calculateSpentPercentage(totalBudgetPaise, totalExpensePaise)
 
   // Sort categories by highest spending
-  const topCategories = Object.entries(categorySpending).sort((a, b) => b[1] - a[1]).slice(0, 5)
+  const topCategories = getTopCategories(categorySpending, 5)
 
   // Fetch upcoming bills due within 10 days
   const today = new Date()

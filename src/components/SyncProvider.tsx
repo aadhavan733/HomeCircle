@@ -1,71 +1,103 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useSyncExternalStore } from 'react'
 import { db } from '@/lib/db'
 import { syncTransactions } from '@/app/transactions/actions'
 
+function subscribeOnline(callback: () => void) {
+  window.addEventListener('online', callback)
+  window.addEventListener('offline', callback)
+  return () => {
+    window.removeEventListener('online', callback)
+    window.removeEventListener('offline', callback)
+  }
+}
+
+function getOnlineSnapshot() {
+  return typeof navigator !== 'undefined' ? navigator.onLine : true
+}
+
+function getOnlineServerSnapshot() {
+  return true
+}
+
 export default function SyncProvider({ children }: { children: React.ReactNode }) {
-  const [isOnline, setIsOnline] = useState(true)
+  const isOnline = useSyncExternalStore(
+    subscribeOnline,
+    getOnlineSnapshot,
+    getOnlineServerSnapshot
+  )
   const [pendingCount, setPendingCount] = useState(0)
 
-  const checkPending = useCallback(async () => {
-    try {
-      const count = await db.transactions.where('sync_status').equals('pending').count()
-      setPendingCount(count)
-    } catch (e) {
-      console.error(e)
+
+
+  useEffect(() => {
+    const checkAuth = () => {
+      const isPublic = window.location.pathname.startsWith('/login') || window.location.pathname.startsWith('/auth')
+      if (isPublic) return
+
+      const hasAuthCookie = document.cookie.split(';').some(c => c.trim().startsWith('sb-') && c.includes('auth-token'))
+      if (!hasAuthCookie) {
+        window.location.replace('/login')
+      }
+    }
+
+    checkAuth()
+
+    const handlePageShow = () => {
+      checkAuth()
+    }
+
+    const handlePopState = () => {
+      checkAuth()
+    }
+
+    window.addEventListener('pageshow', handlePageShow)
+    window.addEventListener('popstate', handlePopState)
+
+    return () => {
+      window.removeEventListener('pageshow', handlePageShow)
+      window.removeEventListener('popstate', handlePopState)
     }
   }, [])
 
-  const attemptSync = useCallback(async () => {
-    if (!navigator.onLine) return
-    
-    try {
-      const pendingTxns = await db.transactions.where('sync_status').equals('pending').toArray()
-      if (pendingTxns.length === 0) return
-
-      const result = await syncTransactions(pendingTxns)
-      if (result.success) {
-        // Mark all as synced and delete
-        for (const txn of pendingTxns) {
-          await db.transactions.update(txn.id, { sync_status: 'synced' })
-          await db.transactions.delete(txn.id)
-        }
-        checkPending()
-      }
-    } catch (e) {
-      console.error('Background sync failed:', e)
-    }
-  }, [checkPending])
-
   useEffect(() => {
-    setIsOnline(navigator.onLine)
+    let ignore = false
 
-    const handleOnline = () => {
-      setIsOnline(true)
-      attemptSync()
+    const runSync = async () => {
+      if (typeof navigator === 'undefined') return
+      try {
+        const count = await db.transactions.where('sync_status').equals('pending').count()
+        if (!ignore) setPendingCount(count)
+
+        if (navigator.onLine && count > 0) {
+          const pendingTxns = await db.transactions.where('sync_status').equals('pending').toArray()
+          if (pendingTxns.length > 0) {
+            const result = await syncTransactions(pendingTxns)
+            if (result.success && !ignore) {
+              for (const txn of pendingTxns) {
+                await db.transactions.update(txn.id, { sync_status: 'synced' })
+                await db.transactions.delete(txn.id)
+              }
+              const updatedCount = await db.transactions.where('sync_status').equals('pending').count()
+              if (!ignore) setPendingCount(updatedCount)
+            }
+          }
+        }
+      } catch (e) {
+        console.error('Background sync error:', e)
+      }
     }
-    const handleOffline = () => setIsOnline(false)
 
-    window.addEventListener('online', handleOnline)
-    window.addEventListener('offline', handleOffline)
+    runSync()
 
-    // Initial check
-    checkPending()
-    attemptSync()
-
-    // Periodically retry sync every minute
-    const interval = setInterval(() => {
-      checkPending()
-      attemptSync()
-    }, 60000)
+    const interval = setInterval(runSync, 60000)
 
     return () => {
-      window.removeEventListener('online', handleOnline)
-      window.removeEventListener('offline', handleOffline)
+      ignore = true
       clearInterval(interval)
     }
-  }, [attemptSync, checkPending])
+  }, [isOnline])
 
   return (
     <>

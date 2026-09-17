@@ -5,7 +5,10 @@ import CreateFamilyForm from '@/components/CreateFamilyForm'
 import AddMemberForm from '@/components/AddMemberForm'
 import EditFamilyName from '@/components/EditFamilyName'
 import EditMyName from '@/components/EditMyName'
+import SignOutButton from '@/components/SignOutButton'
 import { getActiveFamilyId } from '@/lib/activeFamily'
+ 
+export const dynamic = 'force-dynamic'
 
 export default async function FamilyPage() {
   const supabase = await createClient()
@@ -23,9 +26,12 @@ export default async function FamilyPage() {
           <div className="w-16 h-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
             👨‍👩‍👧‍👦
           </div>
-          <h2 className="text-xl font-bold text-gray-900 mb-2">You don't belong to a family yet</h2>
+          <h2 className="text-xl font-bold text-gray-900 mb-2">You don&apos;t belong to a family yet</h2>
           <p className="text-gray-600 mb-6 text-sm">Create a new family to start managing your household budget, tracking bills, and saving together.</p>
           <CreateFamilyForm />
+          <div className="mt-8 pt-6 border-t border-gray-100 flex justify-center">
+            <SignOutButton />
+          </div>
         </div>
       </div>
     )
@@ -174,6 +180,18 @@ export default async function FamilyPage() {
             </form>
           </div>
         )}
+      </div>
+
+      {/* Account & Session */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
+        <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Account</h2>
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-sm font-medium text-gray-900">{user.user_metadata?.full_name || 'HomeCircle User'}</p>
+            <p className="text-xs text-gray-500">{user.email}</p>
+          </div>
+          <SignOutButton />
+        </div>
       </div>
     </div>
   )
