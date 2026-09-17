@@ -32,6 +32,7 @@ body {
 
 @media (max-width: 767px) {
   .mobile-fab-position {
-    bottom: calc(5rem + env(safe-area-inset-bottom));
+    /* Center the 3.5rem tall FAB vertically inside the 4rem tall bottom nav bar */
+    bottom: calc(0.25rem + env(safe-area-inset-bottom));
   }
 }

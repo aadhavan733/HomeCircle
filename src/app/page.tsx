@@ -117,8 +117,8 @@ export default async function Dashboard({
       </header>
 
       <section className="bg-white rounded-xl shadow-sm border border-gray-100 p-5 mb-6 relative">
-        <Link href={`/budgets?month=${currentMonthStr}`} className="absolute top-2 right-2 p-3 text-gray-400 hover:text-gray-700 flex items-center justify-center min-w-[44px] min-h-[44px]" title="Set Budget">
-          <span className="text-lg">✏️</span>
+        <Link href={`/budgets?month=${currentMonthStr}`} className="absolute top-2 right-2 md:top-4 md:right-4 p-3 text-gray-400 hover:text-gray-700 flex items-center justify-center min-w-[44px] min-h-[44px]" title="Set Budget">
+          <span className="text-lg inline-block max-md:-scale-x-100">✏️</span>
         </Link>
         
         {totalBudgetPaise > 0 ? (
